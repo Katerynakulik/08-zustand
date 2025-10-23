@@ -1,8 +1,5 @@
-"use client";
-
 import css from "./Home.module.css";
-import { useEffect } from "react";
-
+import React from "react";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
