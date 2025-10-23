@@ -2,7 +2,7 @@
 
 import css from "./Home.module.css";
 import { useEffect } from "react";
-import { useRouter } from "next/navigation";
+
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -26,13 +26,6 @@ export const metadata: Metadata = {
 };
 
 const NotFound = () => {
-  const router = useRouter();
-
-  useEffect(() => {
-    const timer = setTimeout(() => router.push("/"), 3000);
-    return () => clearTimeout(timer);
-  }, [router]);
-
   return (
     <div>
       <h1 className={css.title}>404 - Page not found</h1>
