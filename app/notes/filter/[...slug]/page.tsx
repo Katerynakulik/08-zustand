@@ -58,7 +58,7 @@ const NotesPage = async ({ params }: NotesPageProps) => {
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
-      <NotesClient search={search} page={page} tag={allowedTag} />
+      <NotesClient tag={allowedTag} />
     </HydrationBoundary>
   );
 };
