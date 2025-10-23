@@ -6,10 +6,10 @@ export interface Note {
   createdAt: string;
   updatedAt: string;
 }
-export interface CreateNote {
+export interface NewNote {
   title: string;
   content: string;
-  tag: string;
+  tag: NoteTag;
 }
 export enum NoteTag {
   Work = "Work",

@@ -1,7 +1,7 @@
 import { create } from "zustand";
-import { NewNote } from "../api";
+
 import { persist } from "zustand/middleware";
-import { NoteTag } from "@/types/note";
+import { NewNote, NoteTag } from "@/types/note";
 
 type NoteStore = {
   draft: NewNote;
