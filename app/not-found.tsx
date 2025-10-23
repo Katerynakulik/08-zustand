@@ -3,6 +3,27 @@
 import css from "./Home.module.css";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Page not found",
+  description:
+    "Page not found. Return to NoteHub and keep your notes organized.",
+  openGraph: {
+    title: "Page not found",
+    description:
+      "Page not found. Return to NoteHub and keep your notes organized.",
+    url: "https://08-zustand-nine-eta.vercel.app/404",
+    images: [
+      {
+        url: "https://ac.goit.global/fullstack/react/notehub-og-meta.jpg",
+        width: 1200,
+        height: 630,
+        alt: "NoteHub image",
+      },
+    ],
+  },
+};
 
 const NotFound = () => {
   const router = useRouter();
