@@ -40,8 +40,8 @@ export default function RootLayout({
   modal: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`}>
-      <body className={`${geistSans.variable} ${geistMono.variable}`}>
+    <html lang="en" className={roboto.variable}>
+      <body>
         <TanStackProvider>
           <Header />
 

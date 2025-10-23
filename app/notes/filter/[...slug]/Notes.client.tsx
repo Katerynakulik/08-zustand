@@ -2,28 +2,24 @@
 
 import NoteList from "@/components/NoteList/NoteList";
 import css from "./NotesPage.module.css";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { fetchNotes } from "@/lib/api";
 import type { FetchNotesResponse } from "@/lib/api";
 import SearchBox from "@/components/SearchBox/SearchBox";
 import Pagination from "@/components/Pagination/Pagination";
-import Modal from "@/components/Modal/Modal";
-import NoteForm from "@/components/NoteForm/NoteForm";
 import { useDebounce } from "use-debounce";
 import { NoteTag } from "@/types/note";
+import Link from "next/link";
 
 interface Props {
-  search: string;
-  page: number;
-  tag?: NoteTag | undefined;
+  tag?: NoteTag;
 }
 
-export default function NotesClient({ search, page, tag }: Props) {
-  const [isOpenModal, setIsOpenModal] = useState(false);
-  const [query, setQuery] = useState(search);
+export default function NotesClient({ tag }: Props) {
+  const [query, setQuery] = useState("");
   const [debouncedQuery] = useDebounce(query, 500);
-  const [currentPage, setCurrentPage] = useState(page);
+  const [currentPage, setCurrentPage] = useState(1);
 
   const { data, isLoading, error } = useQuery<FetchNotesResponse>({
     queryKey: ["notes", debouncedQuery, currentPage, tag],
@@ -38,14 +34,9 @@ export default function NotesClient({ search, page, tag }: Props) {
     placeholderData: (prev) => prev,
   });
 
-  useEffect(() => {
-    setCurrentPage(1);
-  }, [debouncedQuery]);
-
   const handleSearch = (value: string) => {
     setQuery(value);
     setCurrentPage(1);
-    console.log("searching for", value);
   };
 
   const handlePageChange = (page: number) => {
@@ -56,10 +47,7 @@ export default function NotesClient({ search, page, tag }: Props) {
     <>
       <div className={css.app}>
         <header className={css.toolbar}>
-          {/* Компонент SearchBox */}
-          {<SearchBox handleSearch={handleSearch} />}
-          {/* Пагінація */}
-          {/* условие что рендер будет в случае если в коллекции будет 1+ компонент */}
+          <SearchBox handleSearch={handleSearch} />
           {data && data.totalPages > 1 && (
             <Pagination
               currentPage={currentPage}
@@ -67,11 +55,9 @@ export default function NotesClient({ search, page, tag }: Props) {
               onPageChange={handlePageChange}
             />
           )}
-
-          {/* Кнопка створення нотатки */}
-          <button className={css.button} onClick={() => setIsOpenModal(true)}>
+          <Link href="/notes/action/create" className={css.button}>
             Create note +
-          </button>
+          </Link>
         </header>
         {isLoading && <p>Loading...</p>}
         {error && <p>Error loading notes</p>}
@@ -81,11 +67,6 @@ export default function NotesClient({ search, page, tag }: Props) {
           <p>No notes found</p>
         )}
       </div>
-      {isOpenModal && (
-        <Modal onClose={() => setIsOpenModal(false)}>
-          <NoteForm onCancel={() => setIsOpenModal(false)} />
-        </Modal>
-      )}
     </>
   );
 }
