@@ -1,4 +1,4 @@
-import { CreateNote, Note, NoteTag } from "@/types/note";
+import { NewNote, Note, NoteTag } from "@/types/note";
 import axios from "axios";
 import type { AxiosResponse } from "axios";
 
@@ -35,7 +35,7 @@ export async function fetchNotes(params: {
   return response.data;
 }
 
-export const createNote = async (data: CreateNote): Promise<Note> => {
+export const createNote = async (data: NewNote): Promise<Note> => {
   const response = await api.post<Note>("/notes", data);
   return response.data;
 };
